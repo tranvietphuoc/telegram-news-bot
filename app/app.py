@@ -10,11 +10,11 @@ url = 'https://vnexpress.net'
 # get the respone from vnexpress.net
 def getSoup():
     try:
-        respone = requests.get(url)
+        response = requests.get(url)
     except HTTPError:
         print(f'something went wrong with your requests')
         exit(1)
-    return respone
+    return response
 
 
 soup = BeautifulSoup(getSoup().text, 'html.parser')
