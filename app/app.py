@@ -4,13 +4,13 @@ from requests.exceptions import HTTPError
 from models import Info
 
 
-url = 'https://vnexpress.net'
+URL = 'https://vnexpress.net'
 
 
 # get the respone from vnexpress.net
 def get_soup():
     try:
-        response = requests.get(url)
+        response = requests.get(URL)
     except HTTPError:
         print(f'something went wrong with your requests')
         exit(1)
@@ -21,7 +21,7 @@ def get_soup():
 def generate_list_item():
     list_item = []
     for index in range(1, 19):
-        item_name = 'Item-' + str(i)
+        item_name = 'Item-' + str(index)
         list_item.append(item_name)
 
     return list_item
@@ -30,11 +30,12 @@ def generate_list_item():
 # get all tag_a of the topnews of vnexpress.net
 def extract_data():
     result = {}
-    soup = BeautifulSoup(get_soup().text, 'html.parser')
+    soup = BeautifulSoup(get_soup().content, 'html.parser')
     tag_a = soup.find_all('a')
     for link in tag_a:
         if link['class'] in generate_list_item():
-            result.update(link['href'], link.string])
+            result.update(link['href'], link.string)
 
     return result
+
 
