@@ -30,12 +30,19 @@ def generate_list_item():
 # get all tag_a of the topnews of vnexpress.net
 def extract_data():
     result = {}
+    list_item = generate_list_item()
     soup = BeautifulSoup(get_soup().content, 'html.parser')
-    tag_a = soup.find_all('a')
-    for link in tag_a:
-        if link['class'] in generate_list_item():
-            result.update(link['href'], link.string)
-
+    tags_a = soup.find_all('a')  # get all a tags, return a list
+    # loop through a's list, then check if the attribute
+    # data-medium is existed in every a tag, then save into
+    # the result dictionary
+    for link in tags_a:
+        try:
+            if link.attrs['data-medium'] in list_item:
+                result.update({link.attrs['href']: link.string})
+        except KeyError:
+            continue
+    
     return result
 
-
+# print(extract_data())
