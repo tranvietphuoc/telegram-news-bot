@@ -8,8 +8,8 @@ from datetime import datetime
 engine = create_engine('sqlite:///data.db', echo=True)
 
 # create a db_session
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,\
-                                         bind=engine))
+Session = sessionmaker(autocommit=False, bind=engine)
+session = Session()
 
 # declare a mapping
 Base = declarative_base()

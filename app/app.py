@@ -32,7 +32,7 @@ def extract_data():
     result = {}
     list_item = generate_list_item()
     soup = BeautifulSoup(get_soup().content, 'html.parser')
-    tags_a = soup.find_all('a')  # get all a tags, return a list
+    tags_a = soup.body.find_all('a')  # get all a tags in body, return a list
     # loop through a's list, then check if the attribute
     # data-medium is existed in every a tag, then save into
     # the result dictionary
@@ -44,5 +44,9 @@ def extract_data():
             continue
     
     return result
+
+# save informations into table
+def save_data():
+    info = Info()
 
 # print(extract_data())
