@@ -3,7 +3,7 @@ import requests
 from requests.exceptions import HTTPError
 from app import session
 from app.models import Info
-
+from datetime import datetime
 
 # get the respone from vnexpress.net
 def get_soup(url):
@@ -51,6 +51,8 @@ def save_data(url, items):
         session.add(info)
 
 
-def load_data():
-    pass
+def load_data(date_time):
+    return Info.query().filter_by((Info.date_added <= date_time) and
+                                  (int(Info.date_added) == 
+                                  int(date_time))).all()
 
