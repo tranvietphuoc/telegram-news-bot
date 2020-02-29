@@ -3,7 +3,7 @@ import requests
 from requests.exceptions import HTTPError
 from app import session
 from app.models import Info
-from datetime import datetime
+
 
 # get the respone from vnexpress.net
 def get_soup(url):

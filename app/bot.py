@@ -15,7 +15,7 @@ MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'
 @run_async
 def news(update, context):
     info = load_data(datetime.utcnow)
-    chat_id = update.message.chat_id
+    chat_id = update.effective_chat.id
     for i in info:
         message = i.content + i.link
         context.bot.send_message(chat_id=chat_id, message=message)
