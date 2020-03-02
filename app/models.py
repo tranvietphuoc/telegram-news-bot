@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (create_engine, Column, Integer,
                         Sequence, String, DateTime)
+from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
 
@@ -10,7 +11,12 @@ engine = create_engine('sqlite:///data.db', echo=True)
 
 # declare a mapping
 Base = declarative_base()
+# create engine
+Base.metadata.create_all(engine)
 
+# create db session
+Session = sessionmaker(autocommit=False, bind=engine)
+session = Session()
 
 # declare the table to hold the infomations
 class Info(Base):

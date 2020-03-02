@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from requests.exceptions import HTTPError
-from app import session
-from app.models import Info
+from app.models import session, Info
 
 
 # get the respone from vnexpress.net
@@ -16,7 +15,7 @@ def get_soup(url):
 
 
 # generate the list of all class Item name
-def generate_list_item():
+def generate_list_items():
     items = []
     for index in range(1, 19):
         item_name = 'Item-' + str(index)
@@ -50,9 +49,16 @@ def save_data(url, items):
         info = Info(link=link, content=content)
         session.add(info)
 
+    session.commit()
+
 
 def load_data(date_time):
-    return Info.query().filter_by((Info.date_added <= date_time) and
-                                  (int(Info.date_added) == 
-                                  int(date_time))).all()
+    return session.query(Info).filter((Info.date_added <= date_time) and
+                                  (datetime_to_int(Info.date_added) == 
+                                  datetime_to_int(date_time)))
+
+
+def datetime_to_int(date_time):
+    return int(date_time.strftime('%Y%m%d'))
+
 
