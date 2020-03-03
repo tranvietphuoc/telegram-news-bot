@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from requests.exceptions import HTTPError
 from app.models import session, Info
+from sqlalchemy import extract
+from datetime import datetime
 
 
 # get the respone from vnexpress.net
@@ -53,12 +55,10 @@ def save_data(url, items):
 
 
 def load_data(date_time):
-    return session.query(Info).filter((Info.date_added <= date_time) and
-                                  (datetime_to_int(Info.date_added) == 
-                                  datetime_to_int(date_time)))
-
-
-def datetime_to_int(date_time):
-    return int(date_time.strftime('%Y%m%d'))
+    # extract function to extract day, month, year in date_added of database
+    return session.query(Info).filter(
+        extract('day', Info.date_added) == date_time.day,
+        extract('month', Info.date_added) == date_time.month,
+        extract('year', Info.date_added) == date_time.year).all()
 
 

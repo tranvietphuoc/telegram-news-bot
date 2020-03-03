@@ -1,4 +1,3 @@
-from app import session
 from app.bot import main
 
 

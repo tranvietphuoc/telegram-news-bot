@@ -2,8 +2,8 @@ from telegram.ext import (Updater, CommandHandler,
                           InlineQueryHandler, Dispatcher)
 from telegram.ext import run_async
 from app.utils import (generate_list_items, save_data,
-                       datetime_to_int, load_data)
-from app import session
+                       load_data)
+from app.models import session
 from datetime import datetime
 
 
@@ -14,10 +14,12 @@ MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'
 
 @run_async
 def news(update, context):
-    info = load_data(datetime_to_int(datetime.utcnow()))
-    chat_id = update.effective_chat.id
+    info = load_data(datetime.utcnow())
+    # print(info)
+    chat_id = update.message.chat_id
+
     for i in info:
-        message = i.content + i.link
+        message = i.content + ' - ' + i.link
         context.bot.send_message(chat_id=chat_id, message=message)
 
 
