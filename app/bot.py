@@ -13,7 +13,7 @@ MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'
 
 
 @run_async
-def news(update, context):
+def news(update: Update, context: CallbackContext):
     info = load_data(datetime.utcnow())
     # print(info)
     chat_id = update.message.chat_id
@@ -29,5 +29,4 @@ def main():
     dp.add_handler(CommandHandler('news', news))
     updater.start_polling()
     updater.idle()
-
 
