@@ -62,3 +62,14 @@ def load_data(date_time):
         extract('year', Info.date_added) == date_time.year).all()
 
 
+# clean old data from database
+def clean_data():
+    old_data = session.query(Info).filter(extract('day', Info.date_added) <
+                                          datetime.today().day,
+                                          extract('month', Info.date_added) <=
+                                          datetime.today().month,
+                                          extract('year', Info.date_added) <=
+                                          datetime.today().year).all()
+    for data in old_data:
+        session.delete(data)
+    session.commit()

@@ -1,24 +1,21 @@
 from telegram.ext import (Updater, CommandHandler,
-                          InlineQueryHandler, Dispatcher)
-from telegram.ext import run_async
-from app.utils import (generate_list_items, save_data,
-                       load_data)
-from app.models import session
+                          InlineQueryHandler, Dispatcher, run_async)
+from app.utils import load_data
 from datetime import datetime
 import logging
 
 
-URL = 'https://vnexpress.net'
-
 MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'
 
 # use logging module to know when things don't work as expected
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s\
+                    - %(message)s',
                     level=logging.INFO)
 
 
 @run_async
 def news(update, context):
+    # load data from database
     info = load_data(datetime.utcnow())
     # print(info)
     chat_id = update.message.chat_id
