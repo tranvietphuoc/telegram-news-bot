@@ -58,12 +58,12 @@ def load_data(date_time):
     # extract function to extract day, month, year in date_added of database
     # query data if the day of query is the same of Info.date_added
     # and the substraction of the hour of query and Info.date_added
-    # greater than 3
+    # greater than 1
     return session.query(Info).filter(
         extract('day', Info.date_added) == date_time.day,
         extract('month', Info.date_added) == date_time.month,
         extract('year', Info.date_added) == date_time.year,
-        date_time.hour - extract('hour', Info.date_added) >= 3).all()
+        date_time.hour - extract('hour', Info.date_added) >= 1).all()
 
 
 # clean old data from database

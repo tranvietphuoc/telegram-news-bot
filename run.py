@@ -11,8 +11,8 @@ if __name__ == '__main__':
     clean_data()
 
     scheduler = sched.scheduler(time.time, time.sleep)
-    # auto crawl after each 30 minutes
-    scheduler.enter(30*60, 1, save_data,
+    # auto crawl after each 60 seconds
+    scheduler.enter(60, 1, save_data,
                     argument=(URL, generate_list_items(),),
                     kwargs={})
     scheduler.run()
