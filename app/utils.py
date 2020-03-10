@@ -4,6 +4,8 @@ from requests.exceptions import HTTPError
 from app.models import session, Info
 from sqlalchemy import extract
 from datetime import datetime
+import sched
+import time
 
 
 # get the respone from vnexpress.net
@@ -26,9 +28,16 @@ def generate_list_items():
     return items
 
 
+# a dictionary to save the data extracted from vnexpress page
+data_extracted = {}
+
+
 # get all tag_a of the topnews of vnexpress.net
 def extract_data(url, items):
-    result = {}
+    global data_extracted
+    # clean the dict every function extract_data are called
+    data_extracted.clear()
+
     soup = BeautifulSoup(get_soup(url).content, 'html.parser')
     tags_a = soup.body.find_all('a')  # get all a tags in body, return a list
     # loop through a's list, then check if the attribute
@@ -37,17 +46,21 @@ def extract_data(url, items):
     for link in tags_a:
         try:
             if link.attrs['data-medium'] in items:
-                result.update({link.attrs['href']: link.string})
+                data_extracted.update({link.attrs['href']: link.string})
         except KeyError:
             continue
  
-    return result
-
 
 # save informations into table
 def save_data(url, items):
-    data = extract_data(url, items)
-    for link, content in data.items():
+    global data_extracted
+    event = sched.scheduler(time.time, time.sleep)
+    # run extract data after each 1 hour
+    event.enter(3600, 1, extract_data, argument=(url, items,), kwargs={})
+    event.run()
+    
+    # data = extract_data(url, items)
+    for link, content in data_extracted.items():
         info = Info(link=link, content=content)
         session.add(info)
 
@@ -66,7 +79,7 @@ def load_data(date_time):
         date_time.hour - extract('hour', Info.date_added) >= 1).all()
 
 
-# clean old data from database
+# clean old data from database if they're storaged over 2 day
 def clean_data():
     old_data = session.query(Info).filter(extract('day', Info.date_added) <
                                           datetime.today().day,

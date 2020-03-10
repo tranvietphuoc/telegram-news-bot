@@ -17,8 +17,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s\
 def news(update, context):
     # load data from database
     info = load_data(datetime.utcnow())
-    # print(info)
     chat_id = update.message.chat_id
+
+    if info is None:
+        context.bot.send_message(chat_id=chat_id,
+                                 text="Sorry! There is no content!")
+
+    # print(info)
     # if content is None then pass
     for i in info:
         if i.content is None:
