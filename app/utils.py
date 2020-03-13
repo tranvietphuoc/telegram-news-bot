@@ -4,7 +4,8 @@ from requests.exceptions import HTTPError
 from app.models import session, Info
 from sqlalchemy import extract
 from datetime import datetime
-import sched
+import json
+import schedule
 import time
 
 
@@ -29,14 +30,10 @@ def generate_list_items():
 
 
 # a dictionary to save the data extracted from vnexpress page
-data_extracted = {}
-
 
 # get all tag_a of the topnews of vnexpress.net
 def extract_data(url, items):
-    global data_extracted
-    # clean the dict every function extract_data are called
-    data_extracted.clear()
+    data_extracted = {}
 
     soup = BeautifulSoup(get_soup(url).content, 'html.parser')
     tags_a = soup.body.find_all('a')  # get all a tags in body, return a list
@@ -49,22 +46,26 @@ def extract_data(url, items):
                 data_extracted.update({link.attrs['href']: link.string})
         except KeyError:
             continue
- 
+
+    return json.dumps(data_extracted)
+
 
 # save informations into table
 def save_data(url, items):
-    global data_extracted
-    event = sched.scheduler(time.time, time.sleep)
-    # run extract data after each 1 hour
-    event.enter(3600, 1, extract_data, argument=(url, items,), kwargs={})
-    event.run()
-    
+    data = json.loads(extract_data(url, items))
     # data = extract_data(url, items)
-    for link, content in data_extracted.items():
+    for link, content in data.items():
         info = Info(link=link, content=content)
         session.add(info)
 
     session.commit()
+
+
+def schedule_crawl(func, url, items):
+    schedule.every(6).seconds.do(func, url, items)
+    while True:
+        schedule.run_pending()
+        time.sleep(10)
 
 
 def load_data(date_time):
