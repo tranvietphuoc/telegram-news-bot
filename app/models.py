@@ -1,12 +1,13 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import (create_engine, Column, Integer,
-                        Sequence, String, DateTime)
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import (create_engine, Column, Integer, String, DateTime)
 from datetime import datetime
 
 
+"""Create engine and declare model"""
 # create an engine
-engine = create_engine('sqlite:///data.db', echo=True)
+engine = create_engine('sqlite:///data.db',
+                       connect_args={'check_same_thread': False},
+                       echo=True)
 
 
 # declare a mapping
@@ -14,16 +15,12 @@ Base = declarative_base()
 # create engine
 Base.metadata.create_all(engine)
 
-# create db session
-Session = sessionmaker(autocommit=False, bind=engine)
-session = Session()
 
 # declare the table to hold the infomations
 class Info(Base):
     __tablename__ = 'Info'
 
-    id = Column(Integer, Sequence('user_id_seq'), unique=True,
-                primary_key=True)
+    id = Column(Integer, primary_key=True)
     content = Column(String(200))
     link = Column(String(100))
     date_added = Column(DateTime(), nullable=False, default=datetime.utcnow)
