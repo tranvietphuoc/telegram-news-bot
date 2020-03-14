@@ -1,4 +1,4 @@
-# The telegram bot to crawl newest news of https://vnexpress.net and display on bot
+# The telegram bot to crawl newest news of (vnexpress)[https://vnexpress.net] and display on bot
 ## Requirements:
 * [python](https://www.python.org "python") version 3
 * [pipenv](https://pipenv.pypa.io/en/latest/ "pipenv") - you can install it by following the documentation
