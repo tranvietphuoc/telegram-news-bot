@@ -5,7 +5,8 @@ from datetime import datetime
 import logging
 
 
-MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'
+# you can place your token here
+MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'  
 
 # use logging module to know when things don't work as expected
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s\

@@ -12,7 +12,7 @@ auto crawl data then save to database
 if __name__ == '__main__':
     URL = 'https://vnexpress.net'
     items = generate_list_items()
-
+    
     # use ThreadPoolExecutor-a pool of threads to excecute calls asynchronously
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
         clean = executor.submit(schedule_clean, clean_data)

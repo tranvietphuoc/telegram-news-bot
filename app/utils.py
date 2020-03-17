@@ -32,9 +32,6 @@ def generate_list_items():
     return items
 
 
-# a dictionary to save the data extracted from vnexpress page
-
-# get all tag_a of the topnews of vnexpress.net
 def extract_data(url, items):
     """Get data from url and extract theme follow Database schema"""
     data_extracted = {}
