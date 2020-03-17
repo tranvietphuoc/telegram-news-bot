@@ -3,7 +3,7 @@
 * [python](https://www.python.org "python") version 3
 * [pipenv](https://pipenv.pypa.io/en/latest/ "pipenv") - you can install it by following the documentation
 ## Dependencies
-* `pyhon 3.8.2`
+* `python 3.8.2`
 * `beautifulsoup4`
 * `requests`
 * `python-telegram-bot`
