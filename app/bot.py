@@ -6,12 +6,17 @@ import logging
 
 
 # you can place your token here
-MY_TOKEN = '984695585:AAHE0knIkpzxo6SkeK55bgemJLz4L_elTHk'  
-
 # use logging module to know when things don't work as expected
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s\
                     - %(message)s',
                     level=logging.INFO)
+
+
+@run_async
+def start(update, context):
+    chat_id = update.message.chat_id
+    text = "Hi there, please type /news to get the news!"
+    context.bot.send_message(chat_id=chat_id, text=text)
 
 
 @run_async
@@ -34,9 +39,10 @@ def news(update, context):
             context.bot.send_message(chat_id=chat_id, text=message)
 
 
-def main():
-    updater = Updater(MY_TOKEN, use_context=True)
+def main(token):
+    updater = Updater(token, use_context=True)
     dp = updater.dispatcher
+    dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('news', news))
     updater.start_polling()
     updater.idle()
