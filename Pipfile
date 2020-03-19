@@ -31,3 +31,6 @@ pytest = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+bot = "python run.py token.json"
