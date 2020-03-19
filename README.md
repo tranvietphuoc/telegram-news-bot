@@ -15,5 +15,5 @@
 2. Change the current dir to the repo which you cloned
 3. Run the command `pipenv install`, then run `pipenv shell` to active the virtual environment
 4. On telegram [Bot Father](https://telegram.me/BotFather "Bot Father") you make a new bot, then save the token to `token.json` file follow this format: `"token": "TELEGRAM_BOT_TOKEN_STRING"`
-5. Open `Pipfile` add `[scripts] bot = python run.py token.json` to the end of this file
+5. Open `Pipfile` add `[scripts] bot = "python run.py token.json"` to the end of this file
 6. Then run command `pipenv run bot` to run this bot
