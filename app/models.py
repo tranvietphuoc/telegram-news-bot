@@ -5,6 +5,7 @@ from datetime import datetime
 
 """Create engine and declare model"""
 # create an engine
+# use connect_args={'check_same_thread': False} to use SQLite with multithread
 engine = create_engine('sqlite:///data.db',
                        connect_args={'check_same_thread': False},
                        echo=True)
