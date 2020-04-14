@@ -1,8 +1,11 @@
-# The telegram bot to crawl newest news of [vnexpress](https://vnexpress.net) and display on bot - Use polling: periodically connect's to Telegram's servers to check a new update for your bot
-## Requirements:
+# Telegram bot to get news
+### Functionalities
+This bot will crawl the first page of [vnexpress](https://vnexpress.net) then save the content to data base, then display to user when /news command is typed.
+It uses *polling*: periodically connect's to Telegram's servers to check a new update for your bot [see](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Webhooks#creating-a-self-signed-certificate-using-openssl). Run 3 task crawl-save, clean, handle user's command parallelly
+### Requirements:
 * [python](https://www.python.org "python") version 3
 * [pipenv](https://pipenv.pypa.io/en/latest/ "pipenv") - you can install it by following the documentation
-## Main dependencies
+### Main dependencies
 * `python 3.8.2`
 * `beautifulsoup4`
 * `requests`
@@ -10,7 +13,7 @@
 * `schedule`
 * `sqlalchemy`
 * `concurrent.futures`
-## How to use this bot
+### How to use this bot
 1. Use `git` to clone this repo to your local machine
 2. Change the current dir to the repo which you cloned
 3. Run the command `pipenv install`, then run `pipenv shell` to active the virtual environment
