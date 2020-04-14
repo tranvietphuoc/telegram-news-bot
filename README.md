@@ -1,7 +1,7 @@
 # Telegram bot to get news
 ### Functionalities
-This bot will crawl the first page of [vnexpress](https://vnexpress.net) then save the content to data base, then display to user when /news command is typed.
-It uses *polling*: periodically connect's to Telegram's servers to check a new update for your bot [see](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Webhooks#creating-a-self-signed-certificate-using-openssl). Run 3 task crawl-save, clean, handle user's command parallelly
+* This bot will crawl the first page of [vnexpress](https://vnexpress.net) then save the content to data base, then display to user when /news command is typed.
+* It uses *polling*: periodically connect's to Telegram's servers to check a new update for your bot [see](https://github.com/python-telegram-bot/python-telegram-bot/wiki/Webhooks#creating-a-self-signed-certificate-using-openssl). Run 3 task crawl-save, clean, handle user's command parallelly
 ### Requirements:
 * [python](https://www.python.org "python") version 3
 * [pipenv](https://pipenv.pypa.io/en/latest/ "pipenv") - you can install it by following the documentation
